@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu:latest
 
     steps:
-      run: docker run docker-image:latest pytest
+      - run: docker run docker-image:latest pytest
 
   deploy:
     name: Deploy to Server
