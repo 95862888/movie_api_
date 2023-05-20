@@ -48,4 +48,3 @@ jobs:
         run: |
           ssh user@server "cd /tasks/KEKW/ && git pull"
           ssh user@server "cd /tasks/KEKW/ && docker-compose up -d"
->>>>>>> origin/master
