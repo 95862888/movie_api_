@@ -68,7 +68,7 @@ jobs:
             fail_on_empty: false
 
       - run: |
-          docker run --env-file ./env -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
+          docker run --env-file ./env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 #          docker cp ./env ${{ secrets.DOCKERHUB_USER }}/docker-image:latest:/
 
   deploy:
