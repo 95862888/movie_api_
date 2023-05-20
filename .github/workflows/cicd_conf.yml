@@ -50,11 +50,11 @@ jobs:
     steps:
       - run: |
           touch .env
-          echo ${{ secrets.POSTGRE_HOST }} >> .env
-          echo ${{ secrets.POSTGRE_USER }} >> .env
-          echo ${{ secrets.POSTGRE_DB }} >> .env
-          echo ${{ secrets.POSTGRE_PASSWORD }} >> .env
-          echo ${{ secrets.POSTGRE_PORT }} >> .env
+          echo "${{ secrets.POSTGRE_HOST }}" > .env
+          echo "${{ secrets.POSTGRE_USER }}" >> .env
+          echo "${{ secrets.POSTGRE_DB }}" >> .env
+          echo "${{ secrets.POSTGRE_PASSWORD }}" >> .env
+          echo "${{ secrets.POSTGRE_PORT }}" >> .env
       - run: |          
           docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
           docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
