@@ -25,7 +25,6 @@ jobs:
     name: Run tests and linters
     needs:
       - build
-      - test
     runs-on: ubuntu:latest
 
     steps:
@@ -33,7 +32,9 @@ jobs:
 
   deploy:
     name: Deploy to Server
-    needs: build
+    needs:
+      - build
+      - test
     runs-on: ubuntu:latest
 
     steps:
