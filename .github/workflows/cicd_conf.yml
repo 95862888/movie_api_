@@ -53,5 +53,5 @@ jobs:
             port: ${{ secrets.PORT }}
             script: |
               cd ~/tasks/KEKW/
-              git pull git@movie_api:{{OWNER}}/movie_api_.git
+              git pull git@movie_api:${{ secrets.OWNER }}/movie_api_.git
               docker-compose up -d
