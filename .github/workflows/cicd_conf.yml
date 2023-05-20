@@ -47,11 +47,11 @@ jobs:
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          password: ${{ secrets.PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |
-            cd ~/tasks/KEKW/
-            git pull
-            docker-compose up -d
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USER }}
+            key: ${{ secrets.KEY }}
+            port: ${{ secrets.PORT }}
+            script: |
+              cd ~/tasks/KEKW/
+              git pull git@movie_api:{{OWNER}}/movie_api_.git
+              docker-compose up -d
