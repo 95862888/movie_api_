@@ -48,8 +48,10 @@ jobs:
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd ~/tasks/KEKW/ && git pull && docker-compose up -d
+            cd ~/tasks/KEKW/
+            git pull
+            docker-compose up -d
