@@ -59,8 +59,8 @@ jobs:
         image: ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
 
     steps:
-      run:
-        docker run -rm --network container:postgres ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
+      - run:
+          docker run -rm --network container:postgres ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
           
 
 #          docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
