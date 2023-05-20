@@ -53,6 +53,8 @@ jobs:
       POSTGRES_PORT: 5432
       API_KEY: ""
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
       - run: |
           touch .env
           echo "${{ secrets.POSTGRE_HOST }}" > .env
@@ -61,7 +63,6 @@ jobs:
           echo "${{ secrets.POSTGRE_PASSWORD }}" >> .env
           echo "${{ secrets.POSTGRE_PORT }}" >> .env
           docker cp ./.env ${{ secrets.DOCKERHUB_USER }}/docker-image:latest:/
-      - run: |
           docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
   deploy:
