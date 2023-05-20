@@ -40,7 +40,7 @@ jobs:
     steps:
       - run: |
           docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-          docker exec -it ${{ secrets.DOCKERHUB_USER }}/docker-image:latest python3 test_main.py
+          docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
   deploy:
     name: Deploy to Server
