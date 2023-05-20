@@ -29,7 +29,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: docker-image:latest
+          tags: ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
 
   test:
     name: Run tests and linters
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: docker run docker-image:latest pytest
+      - run: docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest pytest
 
   deploy:
     name: Deploy to Server
@@ -56,5 +56,5 @@ jobs:
             key: ${{ secrets.KEY }}
             port: ${{ secrets.PORT }}
             script: |
-              docker pull docker-image:latest
-              docker run -d -p 80:80 docker-image:latest
+              docker pull ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
+              docker run -d -p 80:80 ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
