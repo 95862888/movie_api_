@@ -1,4 +1,5 @@
 import pytest
+
 # from fastapi.testclient import TestClient
 # from sqlalchemy import create_engine
 # from sqlalchemy.orm import sessionmaker
@@ -91,4 +92,4 @@ import pytest
 #     assert data["message"] == "Movie does not exist"
 
 def test_one():
-    assert 1 == 1
+    assert 1 == 0
