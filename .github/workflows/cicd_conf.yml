@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - run: |
-          docker run --name db -e POSTGRES_USER=postgre -e POSTGRES_PASSWORD=postgre -e POSTGRES_DB=postgre -p 5432:5432 -d postgres:latest
+          docker run --name db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:latest
           docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
           docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
