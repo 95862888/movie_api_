@@ -49,7 +49,6 @@ jobs:
 
     steps:
       - run: |
-          docker run --name db -p 5432:5432 -d postgres:latest
           docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
           docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
