@@ -63,12 +63,11 @@ jobs:
             envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
             envkey_POSTGRES_PORT: 5432
             envkey_API_KEY: ${{ secrets.API_KEY }}
-            directory: ./
             file_name: .env
             fail_on_empty: false
 
       - run: |
-          docker run --env-file ./env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
+          docker run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 #          docker cp ./env ${{ secrets.DOCKERHUB_USER }}/docker-image:latest:/
 
   deploy:
