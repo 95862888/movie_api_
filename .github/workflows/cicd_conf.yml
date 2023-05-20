@@ -38,7 +38,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest pytest
+      - run: |
+          docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
+          docker exec -it ${{ secrets.DOCKERHUB_USER }}/docker-image:latest python3 test_main.py
 
   deploy:
     name: Deploy to Server
