@@ -44,8 +44,7 @@ jobs:
           POSTGRES_USER: "postgres"
           POSTGRES_PASSWORD: "postgres"
           POSTGRES_DB: "postgres"
-#        ports:
-#          - 5433:5433
+
     env:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
@@ -54,16 +53,15 @@ jobs:
       POSTGRES_PORT: 5432
       API_KEY: ""
     steps:
-      - run: env
-#      - run: |
-#          touch .env
-#          echo "${{ secrets.POSTGRE_HOST }}" > .env
-#          echo "${{ secrets.POSTGRE_USER }}" >> .env
-#          echo "${{ secrets.POSTGRE_DB }}" >> .env
-#          echo "${{ secrets.POSTGRE_PASSWORD }}" >> .env
-#          echo "${{ secrets.POSTGRE_PORT }}" >> .env
-      - run: |          
-          docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
+      - run: |
+          touch .env
+          echo "${{ secrets.POSTGRE_HOST }}" > .env
+          echo "${{ secrets.POSTGRE_USER }}" >> .env
+          echo "${{ secrets.POSTGRE_DB }}" >> .env
+          echo "${{ secrets.POSTGRE_PASSWORD }}" >> .env
+          echo "${{ secrets.POSTGRE_PORT }}" >> .env
+          docker cp ./.env ${{ secrets.DOCKERHUB_USER }}/docker-image:latest:/
+      - run: |
           docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
   deploy:
