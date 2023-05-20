@@ -49,6 +49,13 @@ jobs:
 
     steps:
       - run: |
+          touch .env
+          echo $POSTGRE_HOST >> .env
+          echo $POSTGRE_USER >> .env
+          echo $POSTGRE_DB >> .env
+          echo $POSTGRE_PASSWORD >> .env
+          echo $POSTGRE_PORT >> .env
+      - run: |
           docker run --name db -p 5433:5433 -d postgres:latest
           docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
           docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
