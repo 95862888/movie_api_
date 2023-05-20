@@ -45,14 +45,6 @@ jobs:
           POSTGRES_PASSWORD: "postgres"
           POSTGRES_DB: "postgres"
 
-    env:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_HOST: "db"
-      POSTGRES_DB: "postgres"
-      POSTGRES_PORT: 5432
-      API_KEY: ""
-
     steps:
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1.3
@@ -68,7 +60,6 @@ jobs:
 
       - run: |
           docker run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
-#          docker cp ./env ${{ secrets.DOCKERHUB_USER }}/docker-image:latest:/
 
   deploy:
     name: Deploy to Server
@@ -83,7 +74,7 @@ jobs:
         with:
             host: ${{ secrets.HOST }}
             username: ${{ secrets.USER }}
-            key: ${{ secrets.KEY }}
+            key: ${{ secrets.HOST_SSH_KEY }}
             port: ${{ secrets.PORT }}
             script: |
               docker pull ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
