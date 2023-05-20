@@ -23,8 +23,10 @@ jobs:
 
   test:
     name: Run tests and linters
-    run: |
-      docker run docker-image:latest pytest
+    runs-on: ubuntu:latest
+
+    steps:
+      run: docker run docker-image:latest pytest
 
   deploy:
     name: Deploy to Server
