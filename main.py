@@ -21,7 +21,7 @@ app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
 DATABASE_URL = f"postgresql://{username}:{password}@{host}/{dbname}"  # Замените на свои данные
-
+print(DATABASE_URL)
 Base = declarative_base()
 
 engine = create_engine(DATABASE_URL)
