@@ -31,9 +31,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
 
-      - name: build and oush db
-        uses:
-
   test:
     name: Run tests and linters
     needs:
