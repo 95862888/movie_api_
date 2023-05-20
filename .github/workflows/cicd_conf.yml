@@ -55,8 +55,7 @@ jobs:
           echo ${{ secrets.POSTGRE_DB }} >> .env
           echo ${{ secrets.POSTGRE_PASSWORD }} >> .env
           echo ${{ secrets.POSTGRE_PORT }} >> .env
-      - run: |
-          docker run --name db -p 5433:5433 -d postgres:latest
+      - run: |          
           docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
           docker run -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
