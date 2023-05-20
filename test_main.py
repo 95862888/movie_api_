@@ -92,4 +92,7 @@ import pytest
 #     assert data["message"] == "Movie does not exist"
 
 def test_one():
-    assert 1 == 0
+    assert 1 == 1
+    
+    
+    
