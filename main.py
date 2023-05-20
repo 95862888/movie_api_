@@ -14,13 +14,14 @@ username = os.environ.get("POSTGRES_USER")
 password = os.environ.get("POSTGRES_PASSWORD")
 # Хост базы данных
 host = os.environ.get("POSTGRES_HOST")
+port = os.environ.get("POSTGRES_PORT")
 # Имя базы данных
 dbname = os.environ.get("POSTGRES_DB")
 
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://{username}:{password}@{host}/{dbname}"  # Замените на свои данные
+DATABASE_URL = f"postgresql://{username}:{password}@{host}:{port}/{dbname}"  # Замените на свои данные
 
 Base = declarative_base()
 
