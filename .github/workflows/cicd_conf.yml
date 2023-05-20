@@ -55,9 +55,12 @@ jobs:
         ports:
           - 5432:5432
 
+      app:
+        image: ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
+
     steps:
       - run: |
-          docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
+#          docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
           docker run -rm --network container:postgres ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
   deploy:
