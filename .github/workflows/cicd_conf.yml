@@ -49,16 +49,16 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER=postgres
-          POSTGRES_PASSWORD=postgres
-          POSTGRES_DB=postgres
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
           - 5432:5432
 
     steps:
       - run: |
           docker run ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-          docker run -rm --network postgres ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
+          docker run -rm --network container:postgres ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
 
   deploy:
     name: Deploy to Server
