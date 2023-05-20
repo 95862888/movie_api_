@@ -54,17 +54,22 @@ jobs:
       API_KEY: ""
 
     steps:
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+            envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+            envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+            envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+            envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+            envkey_POSTGRES_PORT: 5432
+            envkey_API_KEY: ${{ secrets.API_KEY }}
+            directory: ./
+            file_name: .env
+            fail_on_empty: false
+
       - run: |
-          touch ./env
-          echo POSTGRES_USER >> env
-          echo POSTGRES_PASSWORD >> env
-          echo POSTGRES_HOST >> env
-          echo POSTGRES_DB >> env
-          echo POSTGRES_PORT >> env
-          echo API_KEY >> env
-          
-          docker cp ./env ${{ secrets.DOCKERHUB_USER }}/docker-image:latest:/
           docker run --env-file ./env -rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "python3 test_main.py"
+#          docker cp ./env ${{ secrets.DOCKERHUB_USER }}/docker-image:latest:/
 
   deploy:
     name: Deploy to Server
