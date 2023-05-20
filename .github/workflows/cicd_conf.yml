@@ -23,7 +23,9 @@ jobs:
 
   test:
     name: Run tests and linters
-    needs: build
+    needs:
+      - build
+      - test
     runs-on: ubuntu:latest
 
     steps:
