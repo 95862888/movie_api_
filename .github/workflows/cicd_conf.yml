@@ -54,6 +54,7 @@ jobs:
       POSTGRES_PORT: 5432
       API_KEY: ""
     steps:
+      - run: env
 #      - run: |
 #          touch .env
 #          echo "${{ secrets.POSTGRE_HOST }}" > .env
