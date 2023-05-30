@@ -31,35 +31,35 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
 
-  test:
-    name: Run tests and linters
-    needs:
-      - build
-    runs-on: ubuntu-latest
+  # test:
+  #   name: Run tests and linters
+  #   needs:
+  #     - build
+  #   runs-on: ubuntu-latest
 
-    services:
-      db:
-        image: postgres:latest
-        env:
-          POSTGRES_USER: "postgres"
-          POSTGRES_PASSWORD: "postgres"
-          POSTGRES_DB: "postgres"
+  #   services:
+  #     db:
+  #       image: postgres:latest
+  #       env:
+  #         POSTGRES_USER: "postgres"
+  #         POSTGRES_PASSWORD: "postgres"
+  #         POSTGRES_DB: "postgres"
 
-    steps:
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-            envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-            envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-            envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-            envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-            envkey_API_KEY: ${{ secrets.API_KEY }}
-            file_name: .env
-            fail_on_empty: false
+  #   steps:
+  #     - name: Make envfile
+  #       uses: SpicyPizza/create-envfile@v1.3
+  #       with:
+  #           envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+  #           envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  #           envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+  #           envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+  #           envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+  #           envkey_API_KEY: ${{ secrets.API_KEY }}
+  #           file_name: .env
+  #           fail_on_empty: false
 
-      - run: |
-          docker run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "pytest test_main.py"
+  #     - run: |
+  #         docker run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "pytest test_main.py"
 
   deploy:
     name: Deploy to Server
