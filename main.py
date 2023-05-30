@@ -15,9 +15,9 @@ password = os.environ.get("POSTGRES_PASSWORD")
 # Хост базы данных
 host = os.environ.get("POSTGRES_HOST")
 if host is None:
-    host = "db:"
+    host = "db"
 if host == "localhost":
-    host = "db:"
+    host = "db"
 port = os.environ.get("POSTGRES_PORT")
 # Имя базы данных
 dbname = os.environ.get("POSTGRES_DB")
