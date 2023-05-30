@@ -27,7 +27,7 @@ print(username, password)
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://postgres:postgres@db/test"  # Замените на свои данные
+DATABASE_URL = f"postgresql://postgres:postgres@db:5432/test"  # Замените на свои данные
 
 Base = declarative_base()
 
