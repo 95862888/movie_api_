@@ -3,7 +3,6 @@ from sqlalchemy import create_engine, Column, String, Float, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
 import requests
 import os
-from dotenv import load_dotenv
 
 #load_dotenv()
 

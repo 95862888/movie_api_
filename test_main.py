@@ -1,8 +1,5 @@
 from fastapi.testclient import TestClient
 from main import app
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Инициализация тестового клиента
 client = TestClient(app)
@@ -46,6 +43,7 @@ def test_delete_movie():
     if type(response.json()) == dict:
         if response.json()["message"] == "Movie already exists":
             return
+        return
     movie_id = data["id"]
 
 
