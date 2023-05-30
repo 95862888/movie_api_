@@ -21,11 +21,13 @@ if host == "localhost":
 port = os.environ.get("POSTGRES_PORT")
 # Имя базы данных
 dbname = os.environ.get("POSTGRES_DB")
+print(host, port, dbname)
+print(username, password)
 
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://{username}:{password}@db/{dbname}"  # Замените на свои данные
+DATABASE_URL = f"postgresql://{username}:{password}@{host}/{dbname}"  # Замените на свои данные
 
 Base = declarative_base()
 
