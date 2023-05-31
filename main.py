@@ -26,7 +26,6 @@ DATABASE_URL = f"postgresql://{username}:{password}@{host}:5432/{dbname}"  # Ð—Ð
 
 Base = declarative_base()
 
-
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -45,12 +44,8 @@ class Movie(Base):
         self.description = description
         self.rating = rating
         self.poster = poster
-while True:
-    try:
-        Base.metadata.create_all(engine)
-        break
-    except OperationalError:
-        continue
+
+Base.metadata.create_all(engine)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @app.get("/movies/{title}")
