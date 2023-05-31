@@ -58,8 +58,13 @@ jobs:
             file_name: .env
             fail_on_empty: false
 
-      - run: |
-          docker-compose run 
+      - run: 
+          docker-compose run db
+
+      - name: Sever
+      - run:
+          docker-compose run server
+
 
   deploy:
     name: Deploy to Server
@@ -86,5 +91,5 @@ jobs:
             port: ${{ secrets.PORT }}
             script: |
               docker pull ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-              docker-compose run -d -p 80:80 
+              docker-compose run -d
               docker rm $(docker ps -a -f status=exited -f status=created -q)
