@@ -46,30 +46,30 @@ jobs:
           POSTGRES_DB: "postgres"
           POSTGRES_HOST: "5432"
 
-  steps:
-    - name: Make envfile
-      uses: SpicyPizza/create-envfile@v1.3
-      with:
-          envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          envkey_API_KEY: ${{ secrets.API_KEY }}
-          file_name: .env
-          fail_on_empty: false
+    steps:
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+            envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+            envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+            envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+            envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+            envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+            envkey_API_KEY: ${{ secrets.API_KEY }}
+            file_name: .env
+            fail_on_empty: false
 
-    - name: Start the database
-      run: docker-compose up -d db
+      - name: Start the database
+        run: docker-compose up -d db
 
-    - name: Wait for the database to initialize
-      run: docker-compose exec db sh -c 'while ! pg_isready --quiet; do sleep 1; done'
+      - name: Wait for the database to initialize
+        run: docker-compose exec db sh -c 'while ! pg_isready --quiet; do sleep 1; done'
 
-    - name: Run tests
-      run: docker-compose run --rm server sh -c "pytest test_main.py"
+      - name: Run tests
+        run: docker-compose run --rm server sh -c "pytest test_main.py"
 
-    - name: Stop and remove the database
-      run: docker-compose down -v
+      - name: Stop and remove the database
+        run: docker-compose down -v
 
   deploy:
     name: Deploy to Server
