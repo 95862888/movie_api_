@@ -5,6 +5,7 @@ import requests
 import os
 from time import sleep
 from dotenv import load_dotenv
+from sqlalchemy.exc import OperationalError
 
 # load_dotenv()
 
@@ -26,15 +27,13 @@ dbname = os.environ.get("POSTGRES_DB")
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://postgres:postgres@db:5432/postgres"  # Замените на свои данные
+DATABASE_URL = f"postgresql://postgres:postgres@ooo:5432/postgres"  # Замените на свои данные
 
 Base = declarative_base()
 
-try:
-    engine = create_engine(DATABASE_URL)
-except:
-    sleep(15)
-    engine = create_engine(DATABASE_URL)
+
+engine = create_engine(DATABASE_URL)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Movie(Base):
@@ -52,7 +51,11 @@ class Movie(Base):
         self.rating = rating
         self.poster = poster
 
-Base.metadata.create_all(engine)
+try:
+    Base.metadata.create_all(engine)
+except OperationalError:
+    sleep(15)
+    Base.metadata.create_all(engine)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @app.get("/movies/{title}")
