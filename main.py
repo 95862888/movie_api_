@@ -50,12 +50,13 @@ class Movie(Base):
         self.description = description
         self.rating = rating
         self.poster = poster
-
-try:
-    Base.metadata.create_all(engine)
-except OperationalError:
-    sleep(15)
-    Base.metadata.create_all(engine)
+while True:
+    try:
+        Base.metadata.create_all(engine)
+        break
+    except OperationalError:
+        sleep(15)
+        Base.metadata.create_all(engine)
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @app.get("/movies/{title}")
