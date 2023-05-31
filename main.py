@@ -3,6 +3,7 @@ from sqlalchemy import create_engine, Column, String, Float, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
 import requests
 import os
+from time import sleep
 from dotenv import load_dotenv
 from sqlalchemy.exc import OperationalError
 
@@ -22,9 +23,10 @@ dbname = os.environ.get("POSTGRES_DB")
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://{username}:{password}@{host}:5432/{dbname}"  # Замените на свои данные
+DATABASE_URL = f"postgresql://postgres:postgres@db:5432/postgres"  # Замените на свои данные
 
 Base = declarative_base()
+
 
 engine = create_engine(DATABASE_URL)
 
@@ -45,7 +47,17 @@ class Movie(Base):
         self.rating = rating
         self.poster = poster
 
-Base.metadata.create_all(engine)
+i = 0
+while True:
+    try:
+        Base.metadata.create_all(engine)
+        break
+    except OperationalError:
+        if i == 8:
+            raise("Нет подключения к БД")
+        i+=1
+        sleep(3)
+        continue
 # SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @app.get("/movies/{title}")
