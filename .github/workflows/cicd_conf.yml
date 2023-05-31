@@ -86,5 +86,5 @@ jobs:
             port: ${{ secrets.PORT }}
             script: |
               docker pull ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-              docker run --env-file ~/tasks/KEKW/.env -d -p 80:80 ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
+              docker-compose run --env-file ~/tasks/KEKW/.env -d -p 80:80 ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
               docker rm $(docker ps -a -f status=exited -f status=created -q)
