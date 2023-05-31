@@ -3,11 +3,10 @@ from sqlalchemy import create_engine, Column, String, Float, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
 import requests
 import os
-from time import sleep
 from dotenv import load_dotenv
 from sqlalchemy.exc import OperationalError
 
-# load_dotenv()
+load_dotenv()
 
 # Ключ API OMDb
 API_KEY = os.environ.get("API_KEY")
@@ -16,10 +15,6 @@ username = os.environ.get("POSTGRES_USER")
 password = os.environ.get("POSTGRES_PASSWORD")
 # Хост базы данных
 host = os.environ.get("POSTGRES_HOST")
-if host is None:
-    host = "db"
-if host == "localhost":
-    host = "db"
 port = os.environ.get("POSTGRES_PORT")
 # Имя базы данных
 dbname = os.environ.get("POSTGRES_DB")
@@ -27,7 +22,7 @@ dbname = os.environ.get("POSTGRES_DB")
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://postgres:postgres@db:5432/postgres"  # Замените на свои данные
+DATABASE_URL = f"postgresql://{username}:{password}@{host}:5432/{dbname}"  # Замените на свои данные
 
 Base = declarative_base()
 
