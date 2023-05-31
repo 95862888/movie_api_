@@ -27,7 +27,7 @@ dbname = os.environ.get("POSTGRES_DB")
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://postgres:postgres@John:5432/postgres"  # Замените на свои данные
+DATABASE_URL = f"postgresql://postgres:postgres@db:5432/postgres"  # Замените на свои данные
 
 Base = declarative_base()
 
