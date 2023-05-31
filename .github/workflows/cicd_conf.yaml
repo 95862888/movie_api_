@@ -23,6 +23,6 @@ jobs:
               POSTGRES_PORT=5432 
               API_KEY=c4f80daf " > .env
     - name: Run server
-      run: docker compose -f docker-compose.dev.yml up --build -d --remove-orphans
+      run: docker compose -f docker-compose.yml up --build -d --remove-orphans
 permissions: 
   contents: write
