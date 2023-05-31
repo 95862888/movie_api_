@@ -44,7 +44,6 @@ jobs:
           POSTGRES_USER: "postgres"
           POSTGRES_PASSWORD: "postgres"
           POSTGRES_DB: "postgres"
-          POSTGRES_HOST: "5432"
 
     steps:
       - name: Make envfile
@@ -59,17 +58,8 @@ jobs:
             file_name: .env
             fail_on_empty: false
 
-      - name: Start the database
-        run: docker-compose up -d db
-
-      - name: Wait for the database to initialize
-        run: docker-compose exec db sh -c 'while ! pg_isready --quiet; do sleep 1; done'
-
-      - name: Run tests
-        run: docker-compose run --rm server sh -c "pytest test_main.py"
-
-      - name: Stop and remove the database
-        run: docker-compose down -v
+      - run: |
+          docker run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "pytest test_main.py"
 
   deploy:
     name: Deploy to Server
