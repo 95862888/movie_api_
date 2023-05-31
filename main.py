@@ -3,7 +3,8 @@ from sqlalchemy import create_engine, Column, String, Float, Text
 from sqlalchemy.orm import declarative_base, sessionmaker
 import requests
 import os
-# from dotenv import load_dotenv
+from time import sleep
+from dotenv import load_dotenv
 
 # load_dotenv()
 
@@ -29,8 +30,11 @@ DATABASE_URL = f"postgresql://postgres:postgres@db:5432/postgres"  # Замен�
 
 Base = declarative_base()
 
-engine = create_engine(DATABASE_URL)
-
+try:
+    engine = create_engine(DATABASE_URL)
+except:
+    sleep(15)
+    engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Movie(Base):
