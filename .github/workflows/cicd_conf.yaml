@@ -17,7 +17,7 @@ jobs:
         clean: false
 
     - name: CD to derectory
-      run: cd /home/driscoll/tasks/KEKW
+      run: pwd
     - name: "Create env file"
       run:
         echo "POSTGRES_USER=postgres 
