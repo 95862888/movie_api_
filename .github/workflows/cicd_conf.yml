@@ -57,6 +57,8 @@ jobs:
             envkey_API_KEY: ${{ secrets.API_KEY }}
             file_name: .env
             fail_on_empty: false
+      - run:
+          ls
 
       - run: 
           docker-compose run db
