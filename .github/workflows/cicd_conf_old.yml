@@ -59,7 +59,7 @@ jobs:
             fail_on_empty: false
 
       - run: |
-          docker run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "pytest test_main.py"
+          docker-compose run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest sh -c "pytest test_main.py"
 
   deploy:
     name: Deploy to Server
