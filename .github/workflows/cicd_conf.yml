@@ -45,13 +45,6 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
-      server:
-        image: ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-
     steps:
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1.3
