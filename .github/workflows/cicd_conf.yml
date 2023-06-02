@@ -84,7 +84,6 @@ jobs:
             port: ${{ secrets.PORT }}
             script: |
               docker pull ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-              cd ~/movie_api_/ && git checkout variant
-              git pull git@movie_api:95862888/movie_api_.git
+              cd ~/movie_api_/ && git checkout variant && git pull
               docker-compose up -d
               
