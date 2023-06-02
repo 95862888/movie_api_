@@ -59,7 +59,7 @@ jobs:
             fail_on_empty: false
 
       - run: |
-          docker-compose run --env-file .env --rm server pytest test_main.py
+          docker-compose run --env-file .env --rm server pytest test_main.py shell
 
   deploy:
     name: Deploy to Server
