@@ -23,6 +23,9 @@ jobs:
       - name: setup Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: test
+        run: pytest test_main.py
+
       - name: Build and Push server
         uses: docker/build-push-action@v4
         with:
@@ -31,38 +34,37 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
 
-  test:
-    name: Run tests and linters
-    needs:
-      - build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-        with:
-          clean: false
-
-      - name: Make envfile
-        uses: SpicyPizza/create-envfile@v1.3
-        with:
-            envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-            envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-            envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-            envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-            envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-            envkey_API_KEY: ${{ secrets.API_KEY }}
-            file_name: .env
-            fail_on_empty: false
-
-      - run: |
-          docker-compose up --env_file .env --build test
+#  test:
+#    name: Run tests and linters
+#    needs:
+#      - build
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout Repository
+#        uses: actions/checkout@v3
+#        with:
+#          clean: false
+#
+#      - name: Make envfile
+#        uses: SpicyPizza/create-envfile@v1.3
+#        with:
+#            envkey_POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+#            envkey_POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+#            envkey_POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+#            envkey_POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+#            envkey_POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+#            envkey_API_KEY: ${{ secrets.API_KEY }}
+#            file_name: .env
+#            fail_on_empty: false
+#
+#      - run: |
+#          docker-compose up --env_file .env --build test
 
   deploy:
     name: Deploy to Server
     needs:
       - build
-      - test
     runs-on: ubuntu-latest
 
     services:
