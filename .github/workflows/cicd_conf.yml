@@ -59,7 +59,7 @@ jobs:
             fail_on_empty: false
 
       - run: |
-          docker-compose run --env-file .env --rm server pytest test_main.py
+          docker run --env-file .env --rm ${{ secrets.DOCKERHUB_USER }}/docker-image:latest pytest test_main.py
 
   deploy:
     name: Deploy to Server
@@ -86,7 +86,7 @@ jobs:
             port: ${{ secrets.PORT }}
             script: |
               docker pull ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-              cd ~/CICD/
+              cd ~/CICD/ && git checkout variant
               git pull git@movie_api:${{ secrets.OWNER }}/movie_api_.git
               docker-compose up -d
               
