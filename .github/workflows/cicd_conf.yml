@@ -83,8 +83,8 @@ jobs:
             key: ${{ secrets.HOST_SSH_KEY }}
             port: ${{ secrets.PORT }}
             script: |
+              cd ~/movie_api_/ && git checkout variant && git pull
+              docker-compose down
               docker pull ${{ secrets.DOCKERHUB_USER }}/docker-image:latest
-              cd ~/CICD/ && git checkout variant
-              git pull git@movie_api:95862888/movie_api_.git
               docker-compose up -d
               
