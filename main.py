@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-from sqlalchemy import create_engine, Column, String, Float, Text
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 import requests
 import os
 from time import sleep
 from dotenv import load_dotenv
 from sqlalchemy.exc import OperationalError
+from models import Movie, Base
 
 load_dotenv()
 
@@ -23,42 +24,12 @@ dbname = os.environ.get("POSTGRES_DB")
 app = FastAPI()
 
 # Конфигурация базы данных PostgreSQL
-DATABASE_URL = f"postgresql://postgres:postgres@db:5432/postgres"  # Замените на свои данные
-
-Base = declarative_base()
+DATABASE_URL = f"postgresql://{username}:{password}@{host}:{port}/{dbname}"  # Замените на свои данные
 
 
 engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-class Movie(Base):
-    __tablename__ = "movies"
-    id = Column(String, primary_key=True)
-    title = Column(String)
-    description = Column(Text)
-    rating = Column(Float)
-    poster = Column(String)
-
-    def __init__(self, id, title, description, rating, poster):
-        self.id = id
-        self.title = title
-        self.description = description
-        self.rating = rating
-        self.poster = poster
-
-i = 0
-while True:
-    try:
-        Base.metadata.create_all(engine)
-        break
-    except OperationalError:
-        if i == 8:
-            raise("Нет подключения к БД")
-        i+=1
-        sleep(3)
-        continue
-# SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 @app.get("/movies/{title}")
 def get_movie(title: str):

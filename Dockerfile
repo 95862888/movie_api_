@@ -1,9 +1,15 @@
-FROM python:3.10-slim
-# Set the working directory to /app
+FROM python:3.10-slim AS compile-image
+
+COPY requirements.txt .
+
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+FROM python:3.10-slim AS build-image
+
+COPY --from=compile-image /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
+
 WORKDIR /app
-# Copy the current directory contents into the container at /app
 COPY . /app
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
-# Start the app
-CMD ["python3", "main.py"]
+
+CMD ["sh", "-c", "python -m alembic upgrade head && python3 main.py "]

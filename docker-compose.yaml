@@ -6,12 +6,8 @@ services:
       restart: always
       env_file:
         - .env
-      healthcheck:
-        test: ["CMD-SHELL", "pg_isready"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-        
+      ports:
+        - "5432:5432"
     server:
       build: .
       restart: always
@@ -20,7 +16,6 @@ services:
       ports:
         - "8000:8000"
       depends_on:
-        db:
-          condition: service_healthy
+        - db
       volumes:
         - .:/app
